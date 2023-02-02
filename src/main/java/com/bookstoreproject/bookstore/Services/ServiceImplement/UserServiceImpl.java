@@ -4,9 +4,11 @@ import com.bookstoreproject.bookstore.Entity.User;
 import com.bookstoreproject.bookstore.Repository.UserRepository;
 import com.bookstoreproject.bookstore.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
