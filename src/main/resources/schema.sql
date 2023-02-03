@@ -18,6 +18,6 @@ CREATE TABLE authors(
 CREATE TABLE books(
                     book_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                     book_name VARCHAR(255) NOT NULL UNIQUE,
-                    book_author VARCHAR(255) NOT NULL UNIQUE,
-                    ADD FOREIGN KEY (book_author) REFERENCES authors(author_id)
+                    book_author VARCHAR(255) NOT NULL,
+--                     ADD FOREIGN KEY (book_author) REFERENCES authors(author_id)
 );

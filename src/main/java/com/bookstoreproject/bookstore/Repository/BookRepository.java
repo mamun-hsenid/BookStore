@@ -1,14 +1,16 @@
 package com.bookstoreproject.bookstore.Repository;
 
 import com.bookstoreproject.bookstore.Entity.Book;
+import com.bookstoreproject.bookstore.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 @Primary
@@ -35,4 +37,34 @@ public class BookRepository {
 
     @Value("${book.delete}")
     String deleteBook;
+
+    public int createBook(Book book) {
+        return jdbcTemplate.update(createBook,book.getBookName(), book.getBookAuthor());
+    }
+
+    public List<Book> getAllBooks() {
+        return jdbcTemplate.query(
+                getAllBooks,
+                (rs, rowNum) ->
+                        new Book(
+                                rs.getInt("book_id"),
+                                rs.getString("book_name"),
+                                rs.getString("book_author")
+                        )
+        );
+    }
+
+    public Object getSingleBook(int book_id) {
+        return jdbcTemplate.queryForObject(
+                getSingleBook,
+                (rs, rowNum) ->
+                        new Book(
+                                rs.getInt("book_id"),
+                                rs.getString("book_name"),
+                                rs.getString("book_author")
+                        )
+        );
+    }
+
+
 }

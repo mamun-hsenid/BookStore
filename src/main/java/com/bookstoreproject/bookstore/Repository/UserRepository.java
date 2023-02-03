@@ -46,28 +46,28 @@ public class UserRepository {
 
     public List<User> getAllUsers() {
         return jdbcTemplate.query(
-                getAllUsers,
-                (rs, rowNum) ->
-                        new User(
-                                rs.getInt("user_id"),
-                                rs.getString("user_name"),
-                                rs.getString("user_email"),
-                                rs.getString("user_password")
-                        )
+            getAllUsers,
+            (rs, rowNum) ->
+                new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("user_email"),
+                        rs.getString("user_password")
+                )
         );
     }
 
     public Object getSingleUser(int userId) {
         return jdbcTemplate.queryForObject(
-                getSingleUser,
-                (rs, rowNum) ->
-                        new User(
-                                rs.getInt("user_id"),
-                                rs.getString("user_name"),
-                                rs.getString("user_email"),
-                                rs.getString("user_password"
-                        )
+            getSingleUser,
+            (rs, rowNum) ->
+                new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_name"),
+                        rs.getString("user_email"),
+                        rs.getString("user_password"
                 )
+            )
         );
     }
 

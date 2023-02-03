@@ -17,9 +17,9 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "author_id")
-    private int userId;
+    private int authorId;
     @Column(name = "author_name")
-    private String userName;
+    private String authorName;
     @Column(name = "author_email")
-    private String userEmail;
+    private String authorEmail;
 }

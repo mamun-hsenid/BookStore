@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 
 @Repository
@@ -36,4 +37,29 @@ public class AuthorRepository {
 
     @Value("${author.delete}")
     String deleteAuthor;
+
+    public int createAuthor(Author author) {
+        if (author != null){
+            return jdbcTemplate.update(createAuthor, author.getAuthorName(), author.getAuthorEmail());
+        } else{
+            return 0;
+        }
+    }
+
+    public List<Author> getAllAuthors() {
+        return jdbcTemplate.query(
+            getAllAuthors,
+            (rs, rowNum) ->
+                new Author(
+                        rs.getInt("author_id"),
+                        rs.getString("author_name"),
+                        rs.getString("author_email")
+                )
+        );
+    }
+
+
+
+
+
 }
