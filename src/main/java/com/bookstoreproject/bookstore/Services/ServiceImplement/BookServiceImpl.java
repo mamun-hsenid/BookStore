@@ -21,30 +21,20 @@ public class BookServiceImpl implements BookService {
             return 0;
         }
     }
-
     @Override
     public List<Book> getAllBooks() {
         List<Book> book = bookRepository.getAllBooks();
         return book;
     }
-
     @Override
-    public Book getBook(String name) {
-        return null;
+    public int updateBookNameById(Book book, int id) {
+        return bookRepository.updateBookName(book, id);
     }
-
     @Override
-    public Book getBook(int id) {
-        return null;
+    public int updateBookAuthorById(Book book, int id) {
+        return bookRepository.updateBookAuthor(book, id);
     }
-
-    @Override
-    public Book updateBookNameById(int id) {
-        return null;
-    }
-
-    @Override
-    public Book updateBookAuthorById(int id) {
-        return null;
+    public int deleteBookById(int id){
+        return bookRepository.deleteBookById(id);
     }
 }

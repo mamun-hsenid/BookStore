@@ -40,7 +40,7 @@ public class UserRepository {
     @Value("${user.delete}")
     String deleteUser;
 
-    public int save(User user) {
+    public int createUserve(User user) {
         return jdbcTemplate.update(createUser, user.getUserName(), user.getUserEmail(), user.getUserPassword());
     }
 
@@ -57,30 +57,16 @@ public class UserRepository {
         );
     }
 
-    public Object getSingleUser(int userId) {
-        return jdbcTemplate.queryForObject(
-            getSingleUser,
-            (rs, rowNum) ->
-                new User(
-                        rs.getInt("user_id"),
-                        rs.getString("user_name"),
-                        rs.getString("user_email"),
-                        rs.getString("user_password"
-                )
-            )
-        );
+    public int updateUserName(User user,int userId) {
+        return jdbcTemplate.update(updateUserName, user.getUserName(),userId);
     }
 
-    public int updateUserName(User user) {
-        return jdbcTemplate.update(updateUserName, user.getUserName());
+    public int updateUserPassword(User user, int id) {
+        return jdbcTemplate.update(updateUserPassword, user.getUserPassword(), id);
     }
 
-    public int updateUserPassword(User user) {
-        return jdbcTemplate.update(updateUserPassword, user.getUserPassword());
-    }
-
-    public int updateUserEmail(User user) {
-        return jdbcTemplate.update(updateUserEmail, user.getUserEmail());
+    public int updateUserEmail(User user, int id) {
+        return jdbcTemplate.update(updateUserEmail, user.getUserEmail(), id);
     }
 
     public int deleteUser(int id) {

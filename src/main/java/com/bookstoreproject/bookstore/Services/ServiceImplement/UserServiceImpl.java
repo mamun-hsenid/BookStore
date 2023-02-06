@@ -16,12 +16,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int createUser(User user) {
         if (user != null) {
-            return userRepository.save(user);
+            return userRepository.createUserve(user);
         } else {
             return 0;
         }
     }
-
     @Override
     public List <User> getAllUsers() {
         List <User> users = userRepository.getAllUsers();
@@ -29,26 +28,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserById(int id) {
-        User user = (User) userRepository.getSingleUser(id);
-        return user;
+    public int updateUserName (User user, int id){
+        return userRepository.updateUserName(user, id);
     }
-
     @Override
-    public int updateUserName(User user) {
-        return userRepository.updateUserName(user);
+    public int updateUserEmail (User user, int id) {
+        return userRepository.updateUserEmail(user, id);
     }
-
     @Override
-    public int updateUserEmail(User user) {
-        return userRepository.updateUserEmail(user);
+    public int updateUserPassword(User user, int id) {
+        return userRepository.updateUserPassword(user, id);
     }
-
-    @Override
-    public int updateUserPassword(User user) {
-        return userRepository.updateUserPassword(user);
-    }
-
     @Override
     public int deleteUser(int id) {
         return userRepository.deleteUser(id);
