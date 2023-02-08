@@ -1,9 +1,8 @@
-package com.bookstoreproject.bookstore.Services.ServiceImplement;
+package com.bookstoreproject.bookstore.services.ServiceImplement;
 
-import com.bookstoreproject.bookstore.Entity.Author;
-import com.bookstoreproject.bookstore.Entity.User;
-import com.bookstoreproject.bookstore.Repository.AuthorRepository;
-import com.bookstoreproject.bookstore.Services.AuthorService;
+import com.bookstoreproject.bookstore.entity.Author;
+import com.bookstoreproject.bookstore.repository.AuthorRepository;
+import com.bookstoreproject.bookstore.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

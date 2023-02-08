@@ -1,8 +1,9 @@
-package com.bookstoreproject.bookstore.Services.ServiceImplement;
+package com.bookstoreproject.bookstore.services.ServiceImplement;
 
-import com.bookstoreproject.bookstore.Entity.Book;
-import com.bookstoreproject.bookstore.Repository.BookRepository;
-import com.bookstoreproject.bookstore.Services.BookService;
+import com.bookstoreproject.bookstore.entity.AuthorBook;
+import com.bookstoreproject.bookstore.entity.Book;
+import com.bookstoreproject.bookstore.repository.BookRepository;
+import com.bookstoreproject.bookstore.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,12 @@ public class BookServiceImpl implements BookService {
         List<Book> book = bookRepository.getAllBooks();
         return book;
     }
+
+    @Override
+    public List<AuthorBook> getBookAuthor(String name) {
+        return bookRepository.getBookAuthor(name);
+    }
+
     @Override
     public int updateBookNameById(Book book, int id) {
         return bookRepository.updateBookName(book, id);

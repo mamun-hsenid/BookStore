@@ -1,4 +1,4 @@
-package com.bookstoreproject.bookstore.Entity;
+package com.bookstoreproject.bookstore.entity;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,8 @@
-package com.bookstoreproject.bookstore.Repository;
+package com.bookstoreproject.bookstore.repository;
 
-import com.bookstoreproject.bookstore.Entity.Book;
+import com.bookstoreproject.bookstore.entity.Author;
+import com.bookstoreproject.bookstore.entity.AuthorBook;
+import com.bookstoreproject.bookstore.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +24,9 @@ public class BookRepository {
     String createBook;
     @Value("${book.get-all}")
     String getAllBooks;
+
+    @Value("${book.get-author}")
+    String getBookAuthor;
     @Value("${book.get-single}")
     String getSingleBook;
     @Value("${book.update-bookname}")
@@ -54,5 +59,24 @@ public class BookRepository {
     }
     public int deleteBookById(int id) {
         return jdbcTemplate.update(deleteBook,id);
+    }
+
+    public List<AuthorBook> getBookAuthor (String name) {
+        return jdbcTemplate.query(
+                getBookAuthor,
+                (rs, rowNum) ->
+                        new AuthorBook(
+                                new Book(
+                                        rs.getInt("book_id"),
+                                        rs.getString("book_name"),
+                                        rs.getString("book_author")
+                                ),
+                                new Author(
+                                        rs.getInt("author_id"),
+                                        rs.getString("author_name"),
+                                        rs.getString("author_email")
+                                )
+                        ), name
+        );
     }
 }

@@ -1,5 +1,5 @@
-package com.bookstoreproject.bookstore.Services;
-import com.bookstoreproject.bookstore.Entity.Author;
+package com.bookstoreproject.bookstore.services;
+import com.bookstoreproject.bookstore.entity.Author;
 import java.util.List;
 
 public interface AuthorService {

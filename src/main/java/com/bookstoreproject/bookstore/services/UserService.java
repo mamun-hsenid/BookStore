@@ -1,6 +1,6 @@
-package com.bookstoreproject.bookstore.Services;
+package com.bookstoreproject.bookstore.services;
 
-import com.bookstoreproject.bookstore.Entity.User;
+import com.bookstoreproject.bookstore.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

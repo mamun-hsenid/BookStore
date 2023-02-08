@@ -1,13 +1,12 @@
-package com.bookstoreproject.bookstore.Controller;
+package com.bookstoreproject.bookstore.controller;
 
 
-import com.bookstoreproject.bookstore.Entity.Book;
-import com.bookstoreproject.bookstore.Entity.User;
-import com.bookstoreproject.bookstore.Services.BookService;
+import com.bookstoreproject.bookstore.entity.AuthorBook;
+import com.bookstoreproject.bookstore.entity.Book;
+import com.bookstoreproject.bookstore.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,7 @@ public class BookController {
     @Autowired
     private BookService bookService;
 
-    @GetMapping
+    @GetMapping("/")
     public List<Book> getBooks() {
         return bookService.getAllBooks();
     }
@@ -60,6 +59,13 @@ public class BookController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+
+
+    @GetMapping("/{name}")
+    public List<AuthorBook> getAuthorBooks(@PathVariable("name") String name) {
+        return bookService.getBookAuthor(name);
     }
 
 }

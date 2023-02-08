@@ -1,6 +1,6 @@
-package com.bookstoreproject.bookstore.Repository;
+package com.bookstoreproject.bookstore.repository;
 
-import com.bookstoreproject.bookstore.Entity.User;
+import com.bookstoreproject.bookstore.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -72,4 +72,5 @@ public class UserRepository {
     public int deleteUser(int id) {
         return jdbcTemplate.update(deleteUser, id);
     }
+
 }
