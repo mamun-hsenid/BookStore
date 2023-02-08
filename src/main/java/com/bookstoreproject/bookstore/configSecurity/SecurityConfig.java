@@ -23,8 +23,8 @@ public class SecurityConfig {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .requestMatchers("/user").hasAnyRole("ADMIN")
-//                .requestMatchers("/user").permitAll()
+                .requestMatchers("/user").hasAnyRole("ADMIN")               // ######## role base authentication #######
+//                .requestMatchers("/user").permitAll()                                   // ######## permit all requests #######
                 .requestMatchers("/book/").hasAnyRole("USER")
                 .requestMatchers("/author").hasAnyRole("AUTHOR")
                 .anyRequest()
@@ -36,6 +36,9 @@ public class SecurityConfig {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService() {
+
+        // creating users to provide role for role base authentication and providing custom password
+
         UserDetails user = User
                                 .withUsername("user")
                                 .password(passwordEncoder().encode("userPass"))
@@ -54,6 +57,8 @@ public class SecurityConfig {
         return new InMemoryUserDetailsManager(user, author, admin);
     }
 
+
+    //this password encoder is mandatory for using spring security in spring 3+ version
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
