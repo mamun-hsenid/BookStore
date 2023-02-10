@@ -23,13 +23,14 @@ public class SecurityConfig {
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .requestMatchers("/user").hasAnyRole("ADMIN")               // ######## role base authentication #######
-//                .requestMatchers("/user").permitAll()                                   // ######## permit all requests #######
-                .requestMatchers("/book/").hasAnyRole("USER")
-                .requestMatchers("/author").hasAnyRole("AUTHOR")
+//                .requestMatchers("/user").hasAnyRole("ADMIN")               // ######## role base authentication #######
+                .requestMatchers("/**").permitAll()                                   // ######## permit all requests #######
+//                .requestMatchers("/book/").hasAnyRole("USER")
+//                .requestMatchers("/author").hasAnyRole("AUTHOR")
                 .anyRequest()
                 .authenticated()
                 .and()
+                .sessionManagement(session -> session.maximumSessions(2))
                 .httpBasic();
         return http.build();
     }

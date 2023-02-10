@@ -5,11 +5,13 @@ import com.bookstoreproject.bookstore.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
     @Autowired
@@ -20,16 +22,97 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @PostMapping
-    public ResponseEntity<Object> addUser(@RequestBody User user){
+    @GetMapping("/addUser")
+    public String addUserForm(Model model){
+        User user = new User();
+        model.addAttribute("user", user);
+        return "addUserForm";
+    }
+
+    @GetMapping("/update")
+    public String updateUserForm(Model model){
+        User user = new User();
+        model.addAttribute("user", user);
+        System.out.println("inside update : "+user);
+        return "updateUserForm";
+    }
+
+    @GetMapping("/user-list")
+    public String getUserList(Model model){
+        model.addAttribute("users", userService.getAllUsers());
+        return "users";
+    }
+
+    @PostMapping("/add")
+    public String createUser(@ModelAttribute("user") User user){
         System.out.println("add user"+user);
         try{
             userService.createUser(user);
-            return ResponseEntity.status(HttpStatus.CREATED).build();
+            return "redirect:/user/user-list";
         }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return "redirect:/user/user-list";
         }
     }
+
+    @PostMapping("/update/username")
+    public String updateUserName(@ModelAttribute("user") User user){
+        System.out.println("");
+        System.out.println("update user"+user);
+        try{
+            userService.updateUserName(user,user.getUserId());
+            return "redirect:/user/user-list";
+        }catch(Exception e){
+            return "redirect:/user/user-list";
+        }
+    }
+
+
+    @PostMapping("/update/userpassword")
+    public String updateUserPassword(@ModelAttribute("user") User user){
+        System.out.println("");
+        System.out.println("update user"+user);
+        try{
+            userService.updateUserPassword(user,user.getUserId());
+            return "redirect:/user/user-list";
+        }catch(Exception e){
+            return "redirect:/user/user-list";
+        }
+    }
+
+    @PostMapping("/update/email")
+    public String updateUserEmail(@ModelAttribute("user") User user){
+        System.out.println("");
+        System.out.println("update user"+user);
+        try{
+            userService.updateUserEmail(user,user.getUserId());
+            return "redirect:/user/user-list";
+        }catch(Exception e){
+            return "redirect:/user/user-list";
+        }
+    }
+
+    @GetMapping("/delete/{userId}")
+    public String deleteUser(@PathVariable("userId") int userId){
+        System.out.println("");
+        System.out.println("delete user"+userId);
+        try{
+            userService.deleteUser(userId);
+            return "redirect:/user/user-list";
+        }catch(Exception e){
+            return "redirect:/user/user-list";
+        }
+    }
+
+//    @PostMapping
+//    public ResponseEntity<Object> addUser(@RequestBody User user){
+//        System.out.println("add user"+user);
+//        try{
+//            userService.createUser(user);
+//            return ResponseEntity.status(HttpStatus.CREATED).build();
+//        }catch(Exception e){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
 
     @PutMapping("/update-name/{id}")
     public ResponseEntity<Object> updateUser(@RequestBody User user, @PathVariable("id") Integer id){

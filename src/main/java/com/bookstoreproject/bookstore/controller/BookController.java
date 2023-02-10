@@ -7,11 +7,13 @@ import com.bookstoreproject.bookstore.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping("/book")
 public class BookController {
     @Autowired
@@ -26,6 +28,77 @@ public class BookController {
     public int addBook(@RequestBody Book book) {
         return bookService.createBook(book);
     }
+
+
+    @GetMapping("/addbook")
+    public String addUserForm(Model model){
+        Book book = new Book();
+        model.addAttribute("book", book);
+        return "addBookForm";
+    }
+
+    @PostMapping("/add")
+    public String createUser(@ModelAttribute("book") Book book) {
+        System.out.println("add book"+book);
+        try{
+            bookService.createBook(book);
+            return "redirect:/book/book-list";
+        }catch(Exception e){
+            return "redirect:/book/book-list";
+        }
+    }
+
+    @GetMapping("/update")
+    public String updateUserForm(Model model){
+        Book book = new Book();
+        model.addAttribute("book", book);
+        System.out.println("inside update : "+book);
+        return "updateBookForm";
+    }
+
+    @PostMapping("/update/bookname")
+    public String updateBookName(@ModelAttribute("book") Book book) {
+        System.out.println("update book"+book);
+        try{
+            bookService.updateBookNameById(book, book.getBookId());
+            return "redirect:/book/book-list";
+        }catch(Exception e){
+            return "redirect:/book/book-list";
+        }
+    }
+
+    @PostMapping("/update/authorname")
+    public String updateAuthorName(@ModelAttribute("book") Book book) {
+        System.out.println("update book"+book);
+        try{
+            bookService.updateBookAuthorById(book, book.getBookId());
+            return "redirect:/book/book-list";
+        }catch(Exception e){
+            return "redirect:/book/book-list";
+        }
+    }
+
+    @GetMapping("/delete/{bookId}")
+    public String deleteUser(@PathVariable("bookId") int bookId){
+        System.out.println("");
+        System.out.println("delete book"+bookId);
+        try{
+            bookService.deleteBookById(bookId);
+            return "redirect:/book/book-list";
+        }catch(Exception e){
+            return "redirect:/book/book-list";
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     @PutMapping("/update-name/{id}")
     public ResponseEntity<Object> updateBookName(@RequestBody Book book, @PathVariable("id") Integer id){
@@ -50,6 +123,7 @@ public class BookController {
         }
     }
 
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteBook(@PathVariable("id") Integer id) {
         System.out.println("delete user" + id);
@@ -61,7 +135,17 @@ public class BookController {
         }
     }
 
+    @GetMapping("/book-list")
+    public String showBookListPage(Model model) {
+        model.addAttribute("books", bookService.getAllBooks());
+        return "books";
+    }
 
+    @GetMapping("/hello")
+    public String hello(Model model) {
+        model.addAttribute("name", "Thymeleaf");
+        return "users";
+    }
 
     @GetMapping("/{name}")
     public List<AuthorBook> getAuthorBooks(@PathVariable("name") String name) {
