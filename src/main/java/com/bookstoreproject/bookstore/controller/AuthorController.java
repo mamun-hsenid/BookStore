@@ -3,50 +3,31 @@ package com.bookstoreproject.bookstore.controller;
 import com.bookstoreproject.bookstore.entity.Author;
 import com.bookstoreproject.bookstore.services.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @Controller
+@RequestMapping("/author")
 public class AuthorController {
     @Autowired
     AuthorService authorService;
 
-    @PostMapping("/author")
-    @ResponseBody
-    public int addAuthor(@RequestBody Author author){
-        return authorService.createAuthor(author);
-    }
-    @GetMapping("/author")
-    @ResponseBody
-    public List<Author> getAuthor(){
-        return authorService.getAllAuthors();
-    }
-
-
-
-
-
-
-    @GetMapping("/author/author-list")
+    @GetMapping("/author-list")
     public String etAuthorList(Model model){
         model.addAttribute("authors", authorService.getAllAuthors());
         return "authors";
     }
 
 
-    @GetMapping("/author/addauthor")
+    @GetMapping("/addauthor")
     public String addUserForm(Model model){
         Author author = new Author();
         model.addAttribute("author", author);
         return "addAuthorForm";
     }
 
-    @PostMapping("/author/add")
+    @PostMapping("/add")
     public String createUser(@ModelAttribute("author") Author author) {
         System.out.println("add author"+author);
         try{
@@ -57,7 +38,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/author/update")
+    @GetMapping("/update")
     public String updateUserForm(Model model){
         Author author = new Author();
         model.addAttribute("author", author);
@@ -65,7 +46,7 @@ public class AuthorController {
         return "updateAuthorForm";
     }
 
-    @PostMapping("/author/update/authorname")
+    @PostMapping("/update/authorname")
     public String updateBookName(@ModelAttribute("author") Author author) {
         System.out.println("update author"+author);
         try{
@@ -76,7 +57,7 @@ public class AuthorController {
         }
     }
 
-    @PostMapping("/author/update/authoremail")
+    @PostMapping("/update/authoremail")
     public String updateAuthorName(@ModelAttribute("author") Author author) {
         System.out.println("update book"+author);
         try{
@@ -87,7 +68,7 @@ public class AuthorController {
         }
     }
 
-    @GetMapping("/author/delete/{authorId}")
+    @GetMapping("/delete/{authorId}")
     public String deleteUser(@PathVariable("authorId") int authorId){
         System.out.println("");
         System.out.println("delete author"+authorId);
@@ -107,44 +88,44 @@ public class AuthorController {
 
 
 
-
-
-
-
-
-
-
-
-
-
+//    @PostMapping("/author")
+//    @ResponseBody
+//    public int addAuthor(@RequestBody Author author){
+//        return authorService.createAuthor(author);
+//    }
+//    @GetMapping("/author")
+//    @ResponseBody
+//    public List<Author> getAuthor(){
+//        return authorService.getAllAuthors();
+//    }
 //    @GetMapping("/author/author-list")
 //    public String getAuthorList(Model model) {
 //        model.addAttribute("authors", bookService.getAllBooks());
 //        return "authors";
+////    }
+//
+//    @DeleteMapping("/author/{id}")
+//    @ResponseBody
+//    public int deleteAuthor(@PathVariable("id") int id){
+//        return authorService.deleteAuthorById(id);
 //    }
-
-    @DeleteMapping("/author/{id}")
-    @ResponseBody
-    public int deleteAuthor(@PathVariable("id") int id){
-        return authorService.deleteAuthorById(id);
-    }
-
-    @PutMapping("/author/update-name/{id}")
-    @ResponseBody
-    public ResponseEntity<Object> updateAuthorName(@RequestBody Author author, @PathVariable("id") Integer id){
-        System.out.println("Author from controller "+author);
-        System.out.println("id "+id);
-        try{
-            authorService.updateAuthorNameById(author, id);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @PutMapping("/author/update-email/{id}")
-    @ResponseBody
-    public int updateAuthorEmail(@RequestBody Author author, @PathVariable("id") int id){
-        return  authorService.updateAuthorEmailById(author, id);
-    }
+//
+//    @PutMapping("/author/update-name/{id}")
+//    @ResponseBody
+//    public ResponseEntity<Object> updateAuthorName(@RequestBody Author author, @PathVariable("id") Integer id){
+//        System.out.println("Author from controller "+author);
+//        System.out.println("id "+id);
+//        try{
+//            authorService.updateAuthorNameById(author, id);
+//            return ResponseEntity.status(HttpStatus.OK).build();
+//        }catch(Exception e){
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//        }
+//    }
+//
+//    @PutMapping("/author/update-email/{id}")
+//    @ResponseBody
+//    public int updateAuthorEmail(@RequestBody Author author, @PathVariable("id") int id){
+//        return  authorService.updateAuthorEmailById(author, id);
+//    }
 }
